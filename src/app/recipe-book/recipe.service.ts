@@ -8,21 +8,21 @@ import { Subject } from 'rxjs'
 
 export class RecipeService{
     recipesChanged = new Subject<Recipe[]>()
-    private recipes: Recipe[] =[
-        new Recipe("Spaghetti and Meatballs", "dope as meatballs", "https://www.cookingclassy.com/wp-content/uploads/2019/09/meatballs-21.jpg", [
-            new Ingredient('Meatballs', 5),
-            new Ingredient('Pasta', 20)
+    // private recipes: Recipe[] =[
+    //     new Recipe("Spaghetti and Meatballs", "dope ass meatballs", "https://www.cookingclassy.com/wp-content/uploads/2019/09/meatballs-21.jpg", [
+    //         new Ingredient('Meatballs', 5),
+    //         new Ingredient('Pasta', 20)
 
-        ]),
-        new Recipe("Burger", "Welcome to Good Burger", "https://www.cookingclassy.com/wp-content/uploads/2019/09/meatballs-21.jpg", [
-            new Ingredient("Meat", 1),
-            new Ingredient("Cheese", 1),
-            new Ingredient("Buns", 2)
+    //     ]),
+    //     new Recipe("Burger", "Welcome to Good Burger", "https://www.cookingclassy.com/wp-content/uploads/2019/09/meatballs-21.jpg", [
+    //         new Ingredient("Meat", 1),
+    //         new Ingredient("Cheese", 1),
+    //         new Ingredient("Buns", 2)
 
-        ])
-      ]
+    //     ])
+    //   ]
 
-
+    private recipes: Recipe[] = []
     constructor(private slService: ShoppingListService){}
 
     getRecipes(){
@@ -49,6 +49,11 @@ export class RecipeService{
 
     deleteRecipe(index: number){
         this.recipes.splice(index, 1)
+        this.recipesChanged.next(this.recipes.slice())
+    }
+
+    setRecipes(recipes: Recipe[]){
+        this.recipes = recipes
         this.recipesChanged.next(this.recipes.slice())
     }
 }
